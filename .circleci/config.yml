@@ -1,0 +1,104 @@
+# Python CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-python/ for more details
+#
+
+dependencies:
+  cache_directories:
+    - "~/.apt-cache"
+  pre:
+    - sudo rm -rf /var/cache/apt/archives && sudo ln -s ~/.apt-cache /var/cache/apt/archives && mkdir -p ~/.apt-cache/partial
+
+apt-run: &apt-install
+  name: install system packages
+  command: |
+    sudo apt update -qq
+    sudo apt install -y python-pip
+
+version: 2.1
+
+executors:
+  content-executor:
+    docker:
+      - image: circleci/python:latest
+    working_directory: ~/repo
+
+jobs:
+  validate-content:
+    executor: content-executor
+    steps:
+      - run:
+          name: checkout repo
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "" ]; then
+                git clone https://${GITHUB_TOKEN}@github.com/splunk/cloud-datamodel.git
+            else
+                git clone --branch ${CIRCLE_BRANCH} https://${GITHUB_TOKEN}@github.com/splunk/cloud-datamodel.git
+            fi
+      - restore_cache:
+          key: deps1-{{ .Branch }}-{{ checksum "cloud-datamodel/default/app.conf" }}
+      - run: *apt-install
+      - run:
+          name: grab appinspect
+          command: |
+            curl -Ls http://dev.splunk.com/goto/appinspectdownload -o appinspect-lastest.tar.gz
+            mkdir appinspect-latest
+            tar -zxvf appinspect-lastest.tar.gz -C appinspect-latest --strip-components=1
+      - run:
+          name: install appinspect
+          command: |
+            cd appinspect-latest
+            rm -rf venv
+            sudo pip install --upgrade pip setuptools
+            sudo pip install virtualenv
+            virtualenv --python=/usr/bin/python2.7 --clear venv
+            source venv/bin/activate
+            pip install .
+      - run:
+          name: run appinspect
+          command: |
+            rm -rf cloud-datamodel/.git
+            rm -rf cloud-datamodel/.circleci
+            rm -rf cloud-datamodel/.gitignore
+            tar -zcvf cloud-datamodel.tar.gz cloud-datmmodel
+            mkdir dist
+            cp cloud-datamodel.tar.gz dist/
+            cd appinspect-latest
+            source venv/bin/activate
+            splunk-appinspect inspect ../cloud-datamodel.tar.gz --included-tags=cloud 
+      - save_cache:
+          key: deps1-{{ .Branch }}-{{ checksum "cloud-datamodel/default/app.conf" }}
+          paths:
+            - "venv"
+      - persist_to_workspace:
+          root: dist/
+          paths:
+              - cloud-datamodel.tar.gz
+  publish-github-release:
+    docker:
+      - image: cibuilds/github:0.10
+    steps:
+      - attach_workspace:
+          at: ~/dist/cloud-datamodel.tar.gz
+      - run:
+          name: publish release on github
+          command: |
+            ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${CIRCLE_TAG} ~/dist/cloud-datamodel.tar.gz
+workflows:
+  version: 2.1
+  validate-and-build:
+    jobs:
+      - validate-content:
+          filters:
+            tags:
+              only: /.*/
+      - publish-github-release:
+          requires:
+            - validate-content
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
+
+            
