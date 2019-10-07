@@ -60,7 +60,7 @@ jobs:
             rm -rf cloud-datamodel/.git
             rm -rf cloud-datamodel/.circleci
             rm -rf cloud-datamodel/.gitignore
-            tar -zcvf cloud-datamodel.tar.gz cloud-datmmodel
+            tar -zcvf cloud-datamodel.tar.gz cloud-datamodel
             mkdir dist
             cp cloud-datamodel.tar.gz dist/
             cd appinspect-latest
