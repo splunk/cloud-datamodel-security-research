@@ -37,7 +37,6 @@ jobs:
             fi
       - restore_cache:
           key: deps1-{{ .Branch }}-{{ checksum "cloud-datamodel/default/app.conf" }}
-      - run: *apt-install
       - run:
           name: grab splunk packaging toolkit
           command: |
@@ -77,6 +76,7 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/dist
+      - run: *apt-install
       - run:
           name: grab appinspect
           command: |
