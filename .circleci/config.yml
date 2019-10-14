@@ -58,8 +58,8 @@ jobs:
           name: create a .spl for this build using slim
           command: |
               source ~/slim-latest/venv/bin/activate
-              mkdir dist
-              cp -r cloud-datamodel dist/
+              mkdir ~/dist
+              cp -r cloud-datamodel ~/dist/
               cd ~/dist
               CONTENT_VERSION=$(grep -oP "(\d.\d.\d+$)" package/default/content-version.conf)
               CONTENT_VERSION=0.1
@@ -105,7 +105,7 @@ jobs:
           paths:
             - "venv"
       - persist_to_workspace:
-          root: dist/
+          root: ~/dist/
           paths:
               - SA-Cloud_Datamodel-latest.tar.gz
   publish-github-release:
