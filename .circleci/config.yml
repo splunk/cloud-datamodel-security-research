@@ -62,7 +62,7 @@ jobs:
               cp -r cloud-datamodel ~/dist/
               cd ~/dist
               CONTENT_VERSION=0.1
-              mv cloud-datamodel SA_Cloud_Datamodel
+              mv cloud-datamodel SA-Cloud_Datamodel
               slim package -o upload SA-Cloud_Datamodel
               cp upload/*.tar.gz SA-Cloud_Datamodel-latest.tar.gz
       - store_artifacts:
