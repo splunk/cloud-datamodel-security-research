@@ -61,7 +61,6 @@ jobs:
               mkdir ~/dist
               cp -r cloud-datamodel ~/dist/
               cd ~/dist
-              CONTENT_VERSION=$(grep -oP "(\d.\d.\d+$)" package/default/content-version.conf)
               CONTENT_VERSION=0.1
               mv cloud-datamodel SA_Cloud_Datamodel
               slim package -o upload SA-Cloud_Datamodel
