@@ -61,8 +61,8 @@ jobs:
               cp -r cloud-datamodel ~/dist/
               cd ~/dist
               rm -rf cloud-datamodel/.git
-              rm -rf cloud-datamodel/.gi
-              rm -rf cloud-datamodel/.git
+              rm -rf cloud-datamodel/.circleci
+              rm -rf cloud-datamodel/.gitignore
               CONTENT_VERSION=0.1
               mv cloud-datamodel SA-Cloud_Datamodel
               slim package -o upload SA-Cloud_Datamodel
