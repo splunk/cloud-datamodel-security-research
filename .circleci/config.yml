@@ -36,7 +36,7 @@ jobs:
                 git clone --branch ${CIRCLE_BRANCH} https://${GITHUB_TOKEN}@github.com/splunk/cloud-datamodel.git
             fi
       - restore_cache:
-          key: deps1-{{ .Branch }}-{{ checksum "default/app.conf" }}
+          key: deps1-{{ .Branch }}-{{ checksum "cloud-datamodel/default/app.conf" }}
       - run:
           name: grab splunk packaging toolkit
           command: |
@@ -103,7 +103,7 @@ jobs:
             source venv/bin/activate
             splunk-appinspect inspect ~/dist/SA-Cloud_Datamodel-latest.tar.gz --included-tags=cloud 
       - save_cache:
-          key: deps1-{{ .Branch }}-{{ checksum "default/app.conf" }}
+          key: deps1-{{ .Branch }}-{{ checksum "cloud-datamodel/default/app.conf" }}
           paths:
             - "venv"
       - persist_to_workspace:
