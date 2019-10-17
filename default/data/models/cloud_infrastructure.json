@@ -1,14 +1,15 @@
 {
-  "modelName": "Cloud_Draft_v6",
-  "displayName": "Cloud Draft v6",
-  "description": "Cloud Draft v6 Data Model",
-  "editable": false,
+  "modelName": "Cloud_Infrastructure",
+  "displayName": "Cloud Infrastructure",
+  "description": "Cloud Infrastructure Data Model",
+  "editable": true,
   "objects": [
     {
       "comment": {
         "tags": [
           "cloud",
-          "compute"
+          "compute",
+          "infrastructure"
         ]
       },
       "objectName": "Compute",
@@ -43,7 +44,7 @@
         },  
         {   
           "comment": {
-            "description": "The type of the instance specified in dest.",
+            "description": "The type of the instance specified.",
             "recommended": true
           },
           "fieldName": "instance_type",
@@ -147,19 +148,6 @@
         },
         {
           "comment": {
-            "description": "This is the resource name associated with the event. In AWS, this is the ARN",
-            "ta_relevant": true
-          },
-          "fieldName": "resource_name",
-          "displayName": "resource_name",
-          "type": "string",
-          "fieldSearch": "",
-          "required": false,       
-          "multivalue": false,
-          "hidden": false
-        },
-        {
-          "comment": {
             "description": "The type of user making the call. For AWS, some example values are AssumedRole, IAMUser, and AWSService",
             "recommended": true
           },
@@ -177,54 +165,6 @@
           },
           "fieldName": "http_user_agent",
           "displayName": "http_user_agent",
-          "type": "string",
-          "fieldSearch": "",
-          "required": false,
-          "multivalue": false,
-          "hidden": false
-        },
-        {
-          "comment": {
-            "description": "The source IP address of the request."
-          },
-          "fieldName": "src",
-          "displayName": "src",
-          "type": "string",
-          "fieldSearch": "",
-          "required": false,
-          "multivalue": false,
-          "hidden": false
-        },
-        {
-          "comment": {
-            "description": "The source network associated with the request."
-          },
-          "fieldName": "src_network",
-          "displayName": "src_network",
-          "type": "string",
-          "fieldSearch": "",
-          "required": false,
-          "multivalue": false,
-          "hidden": false
-        },
-        {
-          "comment": {
-            "description": "The action requested by the client for the compute resource."
-          },
-          "fieldName": "action",
-          "displayName": "action",
-          "type": "string",
-          "fieldSearch": "",
-          "required": false,
-          "multivalue": false,
-          "hidden": false
-        },
-        {
-          "comment": {
-            "description": "The name of the compute resource associated with the event."
-          },
-          "fieldName": "resource_id",
-          "displayName": "resource_id",
           "type": "string",
           "fieldSearch": "",
           "required": false,
@@ -296,6 +236,19 @@
           "multivalue": false,
           "hidden": false
         },
+        {   
+          "comment": {
+            "description": "This field is used to identify the cloud vendor responsible for the event.",
+            "ta_relevant": true
+          },
+          "fieldName": "vendor",
+          "displayName": "vendor",
+          "type": "string",
+          "fieldSearch": "",
+          "required": false,
+          "multivalue": false,
+          "hidden": false
+        },  
         {
           "comment": {
             "description": "This field is used to identify the specific vendor product responsible for the event.",
@@ -311,6 +264,94 @@
         }
       ],
       "calculations": [
+        {   
+          "calculationID": "Cloud_compute_fillnull_account",
+          "calculationType": "Eval",
+          "outputFields": [
+            {
+              "comment": {
+                "description": "The account identifier for the cloud provider",
+                "recommended": true
+              },
+              "fieldName": "account",
+              "displayName": "account",
+              "type": "string",
+              "fieldSearch": "",
+              "required": false,
+              "multivalue": false,
+              "hidden": false
+            }  
+          ],
+          "expression": "if(isnull(account) OR account=\"\",\"unknown\",account)"
+        },  
+        {
+          "calculationID": "Cloud_compute_fillnull_action",
+          "calculationType": "Eval",
+          "outputFields": [
+            {
+              "comment": {
+                "description": "The action requested by the client for the compute resource.",
+                "expected_values": [
+                  "get",
+                  "put",
+                  "run",
+                  "start",
+                  "stop",
+                  "terminate"
+                ],
+                "recommended": true
+              },
+              "fieldName": "action",
+              "displayName": "action",
+              "type": "string",
+              "fieldSearch": "",
+              "required": false,
+              "multivalue": false,
+              "hidden": false
+            }
+          ],
+          "expression": "if(isnull(action) OR action=\"\",\"unknown\",action)"
+        },
+        {
+          "calculationID": "Cloud_compute_fillnull_resource_name",
+          "calculationType": "Eval",
+          "outputFields": [
+            {
+              "comment": {
+                "description": "This is the resource name associated with the event. In AWS, this is the ARN",
+                "ta_relevant": true
+              },
+              "fieldName": "resource_name",
+              "displayName": "resource_name",
+              "type": "string",
+              "fieldSearch": "",
+              "required": false,       
+              "multivalue": false,
+              "hidden": false
+            }
+          ],
+          "expression": "if(isnull(resource_name) OR resource_name=\"\",\"unknown\",resource_name)"
+        },
+        {
+          "calculationID": "Cloud_compute_fillnull_src",
+          "calculationType": "Eval",
+          "outputFields": [
+            {
+              "comment": {
+                "description": "The source IP address of the request.",
+                "recommended": true
+              },
+              "fieldName": "src",
+              "displayName": "src",
+              "type": "string",
+              "fieldSearch": "",
+              "required": false,
+              "multivalue": false,
+              "hidden": false
+            }
+          ],
+          "expression": "if(isnull(src) OR src=\"\",\"unknown\",src)"
+        },
         {
           "calculationID": "Cloud_compute_fillnull_src_user",
           "calculationType": "Eval",
@@ -350,52 +391,12 @@
             }
           ],
           "expression": "if(isnull(dest) OR dest=\"\",\"unknown\",dest)"
-        },
-        {   
-          "calculationID": "Cloud_compute_fillnull_account",
-          "calculationType": "Eval",
-          "outputFields": [
-            {
-              "comment": {
-                "description": "The account identifier for the cloud provider",
-                "recommended": true
-              },
-              "fieldName": "account",
-              "displayName": "account",
-              "type": "string",
-              "fieldSearch": "",
-              "required": false,
-              "multivalue": false,
-              "hidden": false
-            }  
-          ],
-          "expression": "if(isnull(account) OR account=\"\",\"unknown\",account)"
-        },  
-        {   
-          "calculationID": "Cloud_compute_eval_vendor",
-          "calculationType": "Eval",
-          "outputFields": [
-            {
-              "comment": {
-                "description": "This field is used to identify the cloud vendor responsible for the event.",
-                "ta_relevant": true
-              },
-              "fieldName": "vendor",
-              "displayName": "vendor",
-              "type": "string",
-              "fieldSearch": "",
-              "required": false,
-              "multivalue": true,
-              "hidden": false
-            }  
-          ],
-          "expression": "case(sourcetype==\"*aws*\", \"aws\", sourcetype==\"*gcp*\",\"gcp\", sourcetype=\"mscs\", \"ms\")"
-        }  
+        }
       ],
       "constraints": [
 
       ],
-      "baseSearch": "(`cim_Cloud_indexes`) tag=cloud tag=compute",
+      "baseSearch": "tag=cloud tag=compute tag=infrastructure",
       "children": [
 
       ]
@@ -404,7 +405,8 @@
       "comment": {
         "tags": [
           "cloud",
-          "storage"
+          "storage",
+          "infrastructure"
         ]
       },
       "objectName": "Storage",
@@ -424,6 +426,32 @@
           "multivalue": false,
           "hidden": false
         },  
+        {
+          "comment": {
+            "description": "The permission specified in the acl event",
+            "recommended": true
+          },
+          "fieldName": "acl_permission",
+          "displayName": "acl_permission",
+          "type": "string",
+          "fieldSearch": "",
+          "required": false,
+          "multivalue": false,
+          "hidden": false
+        },
+        {
+          "comment": {
+            "description": "The account or group the permission is granted to in the acl event",
+            "recommended": true
+          },
+          "fieldName": "acl_entity",
+          "displayName": "acl_entity",
+          "type": "string",
+          "fieldSearch": "",
+          "required": false,
+          "multivalue": false,
+          "hidden": false
+        },
         {   
           "comment": {
             "description": "The identifier for the event For AWS, this is the eventName",
@@ -450,19 +478,6 @@
           "multivalue": false,
           "hidden": false
         },  
-        {
-          "comment": {
-            "description": "This is the resource name associated with the event. In AWS, this is the ARN",
-            "ta_relevant": true
-          },
-          "fieldName": "resource_name",
-          "displayName": "resource_name",
-          "type": "string",
-          "fieldSearch": "",
-          "required": false,       
-          "multivalue": false,
-          "hidden": false
-        },
         {
           "comment": {
             "description": "This is the region or geographical area in which the resource exists. For AWS, this is the awsRegion",
@@ -503,30 +518,6 @@
         },
         {
           "comment": {
-            "description": "The source IP address of the request."
-          },
-          "fieldName": "src",
-          "displayName": "src",
-          "type": "string",
-          "fieldSearch": "",
-          "required": false,
-          "multivalue": false,
-          "hidden": false
-        },
-        {
-          "comment": {
-            "description": "The source network associated with the request."
-          },
-          "fieldName": "src_network",
-          "displayName": "src_network",
-          "type": "string",
-          "fieldSearch": "",
-          "required": false,
-          "multivalue": false,
-          "hidden": false
-        },
-        {
-          "comment": {
             "description": "This automatically generated field is used to access tags from within data models. Add-on builders do not need to populate it.",
             "ta_relevant": false
           },
@@ -536,18 +527,6 @@
           "fieldSearch": "",
           "required": false,
           "multivalue": true,
-          "hidden": false
-        },
-        {
-          "comment": {
-            "description": "The action requested by the client."
-          },
-          "fieldName": "action",
-          "displayName": "action",
-          "type": "string",
-          "fieldSearch": "",
-          "required": false,
-          "multivalue": false,
           "hidden": false
         },
         {
@@ -613,6 +592,19 @@
           "multivalue": false,
           "hidden": false
         },
+        {   
+          "comment": {
+            "description": "This field is used to identify the cloud vendor responsible for the event.",
+            "ta_relevant": true
+          },
+          "fieldName": "vendor",
+          "displayName": "vendor",
+          "type": "string",
+          "fieldSearch": "",
+          "required": false,
+          "multivalue": false,
+          "hidden": false
+        },  
         {
           "comment": {
             "description": "This field is used to identify the specific vendor product responsible for the event.",
@@ -628,6 +620,82 @@
         }
       ],
       "calculations": [
+        {   
+          "calculationID": "Cloud_storage_fillnull_account",
+          "calculationType": "Eval",
+          "outputFields": [
+            {
+              "comment": {
+                "description": "The account identifier for the cloud provider",
+                "recommended": true
+              },
+              "fieldName": "account",
+              "displayName": "account",
+              "type": "string",
+              "fieldSearch": "",
+              "required": false,
+              "multivalue": false,
+              "hidden": false
+            }  
+          ],
+          "expression": "if(isnull(account) OR account=\"\",\"unknown\",account)"
+        },  
+        {
+          "calculationID": "Cloud_storage_fillnull_action",
+          "calculationType": "Eval",
+          "outputFields": [
+            {
+              "comment": {
+                "description": "The action requested by the client for the  resource.",
+                "expected_values": [
+                  "get",
+                  "put"
+                ],
+                "recommended": true
+              },
+              "fieldName": "action",
+              "displayName": "action",
+              "type": "string",
+              "fieldSearch": "",
+              "required": false,
+              "multivalue": false,
+              "hidden": false
+            }
+          ],
+          "expression": "if(isnull(action) OR action=\"\",\"unknown\",action)"
+        },
+        {
+          "calculationID": "Cloud_storage_fillnull_resource_name",
+          "calculationType": "Eval",
+          "outputFields": [
+            {
+              "comment": {
+                "description": "This is the resource name associated with the event. In AWS, this is the ARN",
+                "ta_relevant": true
+              },
+              "fieldName": "resource_name",
+              "displayName": "resource_name",
+              "type": "string",
+              "fieldSearch": "",
+              "required": false,       
+              "multivalue": false,
+              "hidden": false
+            }
+          ],
+          "expression": "if(isnull(resource_name) OR resource_name=\"\",\"unknown\",resource_name)"
+        },
+        {
+          "comment": {
+            "description": "The source IP address of the request."
+          },
+          "fieldName": "src",
+          "displayName": "src",
+          "type": "string",
+          "fieldSearch": "",
+          "required": false,
+          "multivalue": false,
+          "hidden": false
+        },
         {
           "calculationID": "Cloud_storage_fillnull_src_user",
           "calculationType": "Eval",
@@ -647,32 +715,12 @@
             }
           ],
           "expression": "if(isnull(src_user) OR src_user=\"\",\"unknown\",src_user)"
-        },
-        {   
-          "calculationID": "Cloud_storage_eval_vendor",
-          "calculationType": "Eval",
-          "outputFields": [
-            {
-              "comment": {
-                "description": "This field is used to identify the cloud vendor responsible for the event.",
-                "ta_relevant": true
-              },
-              "fieldName": "vendor",
-              "displayName": "vendor",
-              "type": "string",
-              "fieldSearch": "",
-              "required": false,
-              "multivalue": true,
-              "hidden": false
-            }  
-          ],
-          "expression": "case(sourcetype==\"*aws*\", \"aws\", sourcetype==\"*gcp*\",\"gcp\", sourcetype=\"mscs\", \"ms\")"
         }  
       ],
       "constraints": [
 
       ],
-      "baseSearch": "(`cim_Cloud_indexes`) tag=cloud tag=storage",
+      "baseSearch": "tag=cloud tag=storage tag=infrastructure",
       "children": [
         
       ]
@@ -680,8 +728,10 @@
     {
       "comment": {
         "tags": [
-          "cloud_network",
-          "cloud_communicate"
+          "cloud",
+          "network",
+          "traffic",
+          "infrastructure"
         ]
       },
       "objectName": "Traffic",
@@ -857,6 +907,19 @@
           "multivalue": true,
           "hidden": false
         },
+        {   
+          "comment": {
+            "description": "This field is used to identify the cloud vendor responsible for the event.",
+            "ta_relevant": true
+          },
+          "fieldName": "vendor",
+          "displayName": "vendor",
+          "type": "string",
+          "fieldSearch": "",
+          "required": false,
+          "multivalue": false,
+          "hidden": false
+        },  
         {
           "comment": {
             "description": "The virtual local area network (VLAN) specified in the record."
@@ -889,11 +952,11 @@
           "outputFields": [
             {
               "comment": {
-                "description": "The action taken by the network device.",
+                "description": "The action requested by the client for the compute resource.",
                 "expected_values": [
-                  "allowed",
-                  "blocked",
-                  "teardown"
+                  "ACCEPT",
+                  "REJECT",
+                  "unknown"
                 ],
                 "recommended": true
               },
@@ -1093,7 +1156,7 @@
           "expression": "if(isnull(transport) OR transport=\"\",\"unknown\",lower(transport))"
         },
         {
-          "calculationID": "Cloud_traffic_fillnull_user",
+          "calculationID": "Cloud_traffic_fillnull_src_user",
           "calculationType": "Eval",
           "outputFields": [
             {
@@ -1101,8 +1164,8 @@
                 "description": "The user that requested the traffic flow.",
                 "recommended": true
               },
-              "fieldName": "user",
-              "displayName": "user",
+              "fieldName": "src_user",
+              "displayName": "src_user",
               "type": "string",
               "fieldSearch": "",
               "required": false,
@@ -1110,7 +1173,7 @@
               "hidden": false
             }
           ],
-          "expression": "if(isnull(user) OR user=\"\",\"unknown\",user)"
+          "expression": "if(isnull(src_user) OR src_user=\"\",\"unknown\",src_user)"
         },
         {
           "calculationID": "Cloud_traffic_vendor_product",
@@ -1135,7 +1198,7 @@
       ],
       "constraints": [
       ],
-      "baseSearch": "(`cim_Cloud_indexes`) tag=cloud tag=network",
+      "baseSearch": "tag=cloud tag=network tag=traffic tag=infrastructure",
       "children": [
 
       ]
