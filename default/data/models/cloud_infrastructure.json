@@ -685,16 +685,24 @@
           "expression": "if(isnull(resource_name) OR resource_name=\"\",\"unknown\",resource_name)"
         },
         {
-          "comment": {
-            "description": "The source IP address of the request."
-          },
-          "fieldName": "src",
-          "displayName": "src",
-          "type": "string",
-          "fieldSearch": "",
-          "required": false,
-          "multivalue": false,
-          "hidden": false
+          "calculationID": "Cloud_storage_fillnull_src",
+          "calculationType": "Eval",
+          "outputFields": [
+            {
+              "comment": {
+                "description": "The source IP address of the request.",
+                "recommended": true
+              },
+              "fieldName": "src",
+              "displayName": "src",
+              "type": "string",
+              "fieldSearch": "",
+              "required": false,
+              "multivalue": false,
+              "hidden": false
+            }
+          ],
+          "expression": "if(isnull(src) OR src=\"\",\"unknown\",src)"
         },
         {
           "calculationID": "Cloud_storage_fillnull_src_user",
@@ -1154,26 +1162,6 @@
             }
           ],
           "expression": "if(isnull(transport) OR transport=\"\",\"unknown\",lower(transport))"
-        },
-        {
-          "calculationID": "Cloud_traffic_fillnull_src_user",
-          "calculationType": "Eval",
-          "outputFields": [
-            {
-              "comment": {
-                "description": "The user that requested the traffic flow.",
-                "recommended": true
-              },
-              "fieldName": "src_user",
-              "displayName": "src_user",
-              "type": "string",
-              "fieldSearch": "",
-              "required": false,
-              "multivalue": false,
-              "hidden": false
-            }
-          ],
-          "expression": "if(isnull(src_user) OR src_user=\"\",\"unknown\",src_user)"
         },
         {
           "calculationID": "Cloud_traffic_vendor_product",
