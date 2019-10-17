@@ -47,7 +47,8 @@ Method 2:
 4. Click the 'upload' button in the top right of the page, and select the cloud_infrastrucutre.json file. You can install in whatever app context you like. 
 5. Go back one level to the list of datamodels and click edit, then select permissions
 6. Select 'all apps', and assign permissions so that everyone read and admins have write. Click save.
-7. Drop the included props.conf, tags.conf, and eventtypes.conf in the <code>lcoal<code> directory of the app context in which you installed, or create/update the associated files in the lcoal directory for the appropriate app. For example, create or modify <code>local/props.conf<code> in the app directory for the Amazon TA, to include the information under the aws stanzas in the included props.conf file.
+7. [optional] Click edit, then enable data model accelleration if desired. 
+8. Drop the included props.conf, tags.conf, and eventtypes.conf in the <code>lcoal<code> directory of the app context in which you installed, or create/update the associated files in the lcoal directory for the appropriate app. For example, create or modify <code>local/props.conf<code> in the app directory for the Amazon TA, to include the information under the aws stanzas in the included props.conf file.
 
 
 # Testing the datamodel
@@ -65,6 +66,8 @@ You can re-run the search, replacing both instances of "Compute" with "Storage" 
 If the data is not showing up, confirm that the provided conf files are properly deployed. They may need to be moved into an app <code>local<code> directory to take precedence over existing directives
 
 Make sure the indexes containing your cloud_infrastructure data are searchable by default, or add the indexes to the definition for the eventtypes as necessary
+
+If data is not properly mapped, consider making edits to the lines provided in props.conf
 
 # To Do's
 * Further testing/refinement of extractions and mappings
