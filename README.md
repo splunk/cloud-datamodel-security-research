@@ -1,4 +1,4 @@
-# Cloud Infrastructure Datamodel
+Cloud Infrastructure Datamodel
 ==========
 
 A Splunk datamodel for cloud infrastructure data (AWS / GCP / Azure)
@@ -26,12 +26,12 @@ A Splunk datamodel for cloud infrastructure data (AWS / GCP / Azure)
 
 You should have the appropriate add-on for your cloud provider to bring data into splunk and perform the basic field extractions. These are the following
 
-AWS - Splunk Add-on for Amazon Web Services - https://splunkbase.splunk.com/app/1876/
-GCP - Splunk Add-on for Google Cloud Platform - https://splunkbase.splunk.com/app/3088/
-Azure - Splunk Add-on for Microsoft Cloud Services - https://splunkbase.splunk.com/app/3110/
+* AWS - Splunk Add-on for Amazon Web Services - https://splunkbase.splunk.com/app/1876/
+* GCP - Splunk Add-on for Google Cloud Platform - https://splunkbase.splunk.com/app/3088/
+* Azure - Splunk Add-on for Microsoft Cloud Services - https://splunkbase.splunk.com/app/3110/
 
 
-# Installing the datamodel. 
+# Installing the datamodel 
 
 Method 1:
 
@@ -45,10 +45,10 @@ Method 2:
 2. Find the cloud_infrastructure.json file located in default/data/models
 3. Navigate to Settings->Datamodels in your splunk instance
 4. Click the 'upload' button in the top right of the page, and select the cloud_infrastrucutre.json file. You can install in whatever app context you like. 
-5. Go back one level to the list of datamodels and click edit, then select permissions
+5. Go back one level to the list of datamodels and click edit, then select "edit permissions"
 6. Select 'all apps', and assign permissions so that everyone read and admins have write. Click save.
-7. [optional] Click edit, then enable data model accelleration if desired. 
-8. Drop the included props.conf, tags.conf, and eventtypes.conf in the <code>lcoal<code> directory of the app context in which you installed, or create/update the associated files in the lcoal directory for the appropriate app. For example, create or modify <code>local/props.conf<code> in the app directory for the Amazon TA, to include the information under the aws stanzas in the included props.conf file.
+7. [optional] Click edit, then choose edit data model accelleration if you wish to accelerate the model. 
+8. Drop the included props.conf, tags.conf, and eventtypes.conf in the <code>local</code> directory of the app context in which you installed, or create/update the associated files in the lcoal directory for the appropriate app. For example, create or modify <code>local/props.conf<code> in the app directory for the Amazon TA, to include the information under the aws stanzas in the included props.conf file.
 
 
 # Testing the datamodel
@@ -59,7 +59,7 @@ The following search will show you how the datamodel is being populated with com
 
 You can re-run the search, replacing both instances of "Compute" with "Storage" or "Traffic". You can also look at a specific provider by inserting a search, such as:
 
-| datamodel Cloud_Infrastructure Compute serach | search sourcetype=aws:cloudtrail | table Compute*
+| datamodel Cloud_Infrastructure Compute search | search sourcetype=aws:cloudtrail | table Compute*
 
 
 # Troubleshooting
