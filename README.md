@@ -70,7 +70,7 @@ You can re-run the search, replacing both instances of "Compute" with "Storage" 
 
 
 # Troubleshooting
-If the data is not showing up, confirm that the provided conf files are properly deployed. They may need to be moved into an app <code>local<code> directory to take precedence over existing directives
+If the data is not showing up, confirm that the provided conf files are properly deployed. They may need to be moved into an app <code>local</code> directory to take precedence over existing directives
 
 Make sure the indexes containing your cloud_infrastructure data are searchable by default, or add the indexes to the definition for the eventtypes as necessary
 
