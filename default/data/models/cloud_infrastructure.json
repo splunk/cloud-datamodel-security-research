@@ -186,15 +186,15 @@
         },
         {
           "comment": {
-            "description": "This automatically generated field is used to access tags from within data models. Add-on builders do not need to populate it.",
-            "ta_relevant": false
+            "description": "This is the resource name associated with the event. In AWS, this is the ARN",
+            "ta_relevant": true
           },
-          "fieldName": "tag",
-          "displayName": "tag",
+          "fieldName": "instance_id",
+          "displayName": "instance_id",
           "type": "string",
           "fieldSearch": "",
-          "required": false,
-          "multivalue": true,
+          "required": false,       
+          "multivalue": false,
           "hidden": false
         },
         { 
@@ -313,26 +313,6 @@
           "expression": "if(isnull(action) OR action=\"\",\"unknown\",action)"
         },
         {
-          "calculationID": "Cloud_compute_fillnull_resource_name",
-          "calculationType": "Eval",
-          "outputFields": [
-            {
-              "comment": {
-                "description": "This is the resource name associated with the event. In AWS, this is the ARN",
-                "ta_relevant": true
-              },
-              "fieldName": "resource_name",
-              "displayName": "resource_name",
-              "type": "string",
-              "fieldSearch": "",
-              "required": false,       
-              "multivalue": false,
-              "hidden": false
-            }
-          ],
-          "expression": "if(isnull(resource_name) OR resource_name=\"\",\"unknown\",resource_name)"
-        },
-        {
           "calculationID": "Cloud_compute_fillnull_src",
           "calculationType": "Eval",
           "outputFields": [
@@ -413,19 +393,6 @@
       "displayName": "Storage",
       "parentName": "BaseSearch",
       "fields": [
-        {   
-          "comment": {
-            "description": "The account identifier for the cloud provider",
-            "recommended": true
-          },
-          "fieldName": "account",
-          "displayName": "account",
-          "type": "string",
-          "fieldSearch": "",
-          "required": false,
-          "multivalue": false,
-          "hidden": false
-        },  
         {
           "comment": {
             "description": "The permission specified in the acl event",
@@ -441,7 +408,7 @@
         },
         {
           "comment": {
-            "description": "The account or group the permission is granted to in the acl event",
+            "description": "The user or group the permission is granted to in the acl event",
             "recommended": true
           },
           "fieldName": "acl_entity",
@@ -514,19 +481,6 @@
           "fieldSearch": "",
           "required": false,
           "multivalue": false,
-          "hidden": false
-        },
-        {
-          "comment": {
-            "description": "This automatically generated field is used to access tags from within data models. Add-on builders do not need to populate it.",
-            "ta_relevant": false
-          },
-          "fieldName": "tag",
-          "displayName": "tag",
-          "type": "string",
-          "fieldSearch": "",
-          "required": false,
-          "multivalue": true,
           "hidden": false
         },
         {
@@ -663,26 +617,6 @@
             }
           ],
           "expression": "if(isnull(action) OR action=\"\",\"unknown\",action)"
-        },
-        {
-          "calculationID": "Cloud_storage_fillnull_resource_name",
-          "calculationType": "Eval",
-          "outputFields": [
-            {
-              "comment": {
-                "description": "This is the resource name associated with the event. In AWS, this is the ARN",
-                "ta_relevant": true
-              },
-              "fieldName": "resource_name",
-              "displayName": "resource_name",
-              "type": "string",
-              "fieldSearch": "",
-              "required": false,       
-              "multivalue": false,
-              "hidden": false
-            }
-          ],
-          "expression": "if(isnull(resource_name) OR resource_name=\"\",\"unknown\",resource_name)"
         },
         {
           "calculationID": "Cloud_storage_fillnull_src",
@@ -880,19 +814,6 @@
           "fieldSearch": "",
           "required": false,
           "multivalue": false,
-          "hidden": false
-        },
-        {
-          "comment": {
-            "description": "This automatically generated field is used to access tags from within data models. Add-on builders do not need to populate it.",
-            "ta_relevant": false
-          },
-          "fieldName": "tag",
-          "displayName": "tag",
-          "type": "string",
-          "fieldSearch": "",
-          "required": false,
-          "multivalue": true,
           "hidden": false
         },
         {
