@@ -22,6 +22,13 @@ A Splunk datamodel for cloud infrastructure data (AWS / GCP / Azure)
 	* Network traffic as provided by vpcflow logs, and gec_instance events for GCP
 
 
+# Description
+
+A Splunk data model is a type of knowledge object that applies an information structure to raw data at search time—regardless of the data's origin or format—and encodes the domain knowledge necessary to build a variety of specialized searches. Data models enhance the efficiency of your searches. You can increase their velocity with data-model acceleration, which creates summaries for the fields you report on, accelerating the dataset represented by those fields. 
+
+The Cloud Infrastructure data model normalizes and combines your machine data from AWS, Azure, and/or GCP, so you can write analytics that work across all three.
+
+
 # Pre-requisites
 
 You should have the appropriate add-on for your cloud provider to bring data into splunk and perform the basic field extractions. These are the following
@@ -48,18 +55,18 @@ Method 2:
 5. Go back one level to the list of datamodels and click edit, then select "edit permissions"
 6. Select 'all apps', and assign permissions so that everyone read and admins have write. Click save.
 7. [optional] Click edit, then choose edit data model accelleration if you wish to accelerate the model. 
-8. Drop the included props.conf, tags.conf, and eventtypes.conf in the <code>local</code> directory of the app context in which you installed, or create/update the associated files in the lcoal directory for the appropriate app. For example, create or modify <code>local/props.conf<code> in the app directory for the Amazon TA, to include the information under the aws stanzas in the included props.conf file.
+8. Drop the included props.conf, tags.conf, and eventtypes.conf in the <code>local</code> directory of the app context in which you installed, or create/update the associated files in the lcoal directory for the appropriate app. For example, create or modify <code>local/props.conf</code> in the app directory for the Amazon TA, to include the information under the aws stanzas in the included props.conf file.
 
 
 # Testing the datamodel
 
 The following search will show you how the datamodel is being populated with compute data -
 
-| datamodel Cloud_Infrastructure Compute search | table Compute*
+<code>| datamodel Cloud_Infrastructure Compute search | table Compute*</code>
 
 You can re-run the search, replacing both instances of "Compute" with "Storage" or "Traffic". You can also look at a specific provider by inserting a search, such as:
 
-| datamodel Cloud_Infrastructure Compute search | search sourcetype=aws:cloudtrail | table Compute*
+<code>| datamodel Cloud_Infrastructure Compute search | search sourcetype=aws:cloudtrail | table Compute*</code>
 
 
 # Troubleshooting
