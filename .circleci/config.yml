@@ -83,7 +83,7 @@ jobs:
           command: |
             curl -Ls http://dev.splunk.com/goto/appinspectdownload -o appinspect-lastest.tar.gz
             mkdir appinspect-latest
-            file appinspect-latest.tar.gz
+            file appinspect-lastest.tar.gz
             tar -zxvf appinspect-lastest.tar.gz -C appinspect-latest --strip-components=1
       - run:
           name: install appinspect
