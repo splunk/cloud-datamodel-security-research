@@ -5,7 +5,7 @@ A Splunk data model for cloud infrastructure data (AWS / GCP / Azure)
 
 *Join the conversation at* [![Slack Status](https://img.shields.io/badge/slack-@splunk/security-yellow.svg?logo=slack)](https://splunk-usergroups.slack.com/signup)
 
-- Original Author: Rico Valdez
+- Original Author: Rico Valdez, Rod Soto
 - Current maintainers:
 - Sourcetype: aws:cloudtrail, aws:cloudwatchlogs:vpcflow, google:gcp:pubsub:message, mscs:azure:audit
 - Has index-time ops: false
@@ -42,8 +42,8 @@ You should have the appropriate add-on(s) for your cloud provider(s) to bring da
 
 Method 1:
 
-1. Download the .spl package and install as a normal app.
-2. It may be necessary to move props.conf, tags.conf, and eventtypes.conf from the app default directory to the local directory. (If it doesn't already exist, create one at the same level as the default directory.)
+1. Download the .tgz package and install as a normal app.
+2. It may be necessary to move props.conf, tags.conf, and eventtypes.conf from the app default directory to the local directory. If it doesn't already exist, create one at the same level as the default directory.
 
 
 Method 2:
