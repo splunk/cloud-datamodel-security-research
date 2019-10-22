@@ -7,7 +7,7 @@ A Splunk data model for cloud infrastructure data (AWS / GCP / Azure)
 
 - Original Author: Rico Valdez
 - Current maintainers:
-- Sourcetype: aws:cloudwatchlogs:vpcflow
+- Sourcetype: aws:cloudtrail, aws:cloudwatchlogs:vpcflow, google:gcp:pubsub:message, mscs:azure:audit
 - Has index-time ops: false
 
 
