@@ -82,4 +82,74 @@ If data is not properly mapped, consider making edits to the lines provided in p
 
 # Provided DM fields
 
-<table here>
+
+|                                                                                                  |                                                                  | 
+|--------------------------------------------------------------------------------------------------|------------------------------------------------------------------| 
+|                                                                                       |  **Field Name**                                                                 | 
+| **Compute**                                                                                          |                                                                  | 
+|                                                                                                  | action                                                           | 
+|                                                                                                  | http_user_agent                                                  | 
+|                                                                                                  | region                                                           | 
+|                                                                                                  | resource_id                                                      | 
+|                                                                                                  | resource_name                                                    | 
+|                                                                                                  | src                                                              | 
+|                                                                                                  | src_network                                                      | 
+|                                                                                                  | user_type                                                        | 
+|                                                                                                  | src_user                                                         | 
+|                                                                                                  | dest                                                             | 
+|                                                                                                  | account                                                          | 
+|                                                                                                  | image_id                                                         | 
+|                                                                                                  | status                                                           | 
+|                                                                                                  | event_name                                                       | 
+|                                                                                                  | msg                                                              | 
+|                                                                                                  |                                                                  | 
+| **Storage**                                                                                          |                                                                  | 
+|                                                                                                  | action                                                           | 
+|                                                                                                  | account                                                          | 
+|                                                                                                  | bucket_name                                                      | 
+|                                                                                                  | http_user_agent                                                  | 
+|                                                                                                  | object_path                                                      | 
+|                                                                                                  | resource_name                                                    | 
+|                                                                                                  | src                                                              | 
+|                                                                                                  | src_network                                                      | 
+|                                                                                                  | user_type                                                        | 
+|                                                                                                  | src_user                                                         | 
+|                                                                                                  | event_name                                                       | 
+|                                                                                                  | msg                                                              | 
+|                                                                                                  |                                                                  | 
+| **Checks**                                                                                           | action                                                           | 
+|                                                                                                  | status                                                           | 
+|                                                                                                  | state?                                                           | 
+| **Interesting fields**                                                                               |                                                                  | 
+| GCP                                                                                              | data.jsonPayload.ident                                           | 
+| GCP                                                                                              | data.protoPayload.authorizationInfo{}.resourceAttributes.service | 
+| GCP                                                                                              | data.resource.type                                               | 
+| GCP                                                                                              | data.severity                                                    | 
+| GCP                                                                                              | data.protoPayload.response.status                                | 
+| GCP                                                                                              | "data.protoPayload.authorizationInfo{}.resource"                 | 
+| Azure                                                                                            |                                                                  | 
+| *** Need to handle multi-value fields for instance_id and possibly others                        |                                                                  | 
+|                                                                                                  |                                                                  | 
+| *Network*                                                                                          | index="gcp_data" "data.resource.type"=gce_network                | 
+|                                                                                                  | Field Name                                                       | 
+|                                                                                                  |                                                                  | 
+|                                                                                                  | host                                                             | 
+|                                                                                                  | dest_zone                                                        | 
+|                                                                                                  | src_port                                                         | 
+|                                                                                                  | src_ip                                                           | 
+|                                                                                                  | dest_ip                                                          | 
+|                                                                                                  | bytes_out                                                        | 
+|                                                                                                  | packets_out                                                      | 
+|                                                                                                  | protocol                                                         | 
+|                                                                                                  | dest_port                                                        | 
+|                                                                                                  | dest_instance                                                    | 
+|                                                                                                  | src_instance                                                     | 
+|                                                                                                  | user                                                             | 
+|                                                                                                  | resource_name                                                    | 
+|                                                                                                  | subnetwork_name                                                  | 
+|                                                                                                  | network_id                                                       | 
+|                                                                                                  | src_asn                                                          | 
+|                                                                                                  | dst_asn                                                          | 
+|                                                                                                  | dvc_mac                                                          | 
+|                                                                                                  | rule                                                             | 
+| EC2 Events handled - Stop, Start, Run, Terminate - look at bringing in createInstance and others |                                                                  | 
