@@ -62,7 +62,7 @@ jobs:
               rm -rf cloud-datamodel/.circleci
               rm -rf cloud-datamodel/.gitignore
               CONTENT_VERSION=0.1
-              mv cloud-datamodel SA-Cloud_Datamodel
+              mv cloud-datamodel SA-Cloud-Datamodel
               slim package -o upload SA-Cloud-Datamodel
               cp upload/*.tar.gz SA-Cloud-Datamodel-latest.tar.gz
       - store_artifacts:
