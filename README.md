@@ -68,6 +68,10 @@ You can re-run the search, replacing both instances of "Compute" with "Storage" 
 
 <code>| datamodel Cloud_Infrastructure Compute search | search sourcetype=aws:cloudtrail | table Compute*</code>
 
+You can also leverage the |tstats command to search this data as well:
+
+<code> | tstats values(Compute.dest) as machines  from datamodel=cloud_infrastructure.Compute by Compute.region Compute.vendor </code>
+
 
 # Troubleshooting
 If the data is not showing up, confirm that the provided .conf files are properly deployed. They may need to be moved into an app <code>local</code> directory to take precedence over existing directives.
