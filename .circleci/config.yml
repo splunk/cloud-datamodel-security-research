@@ -41,7 +41,7 @@ jobs:
             cd cloud-datamodel-security-research
             # if tag is set, get build number from the tag and update .conf file
             if [ -z "${CIRCLE_TAG}" ]; then
-                CONTENT_VERSION=$(grep -oP "(\d.\d.\d+$)" package/default/content-version.conf)
+                CONTENT_VERSION=$(grep -oP "(\d.\d.\d+$)" default/app.conf)
                 echo "detected content version: $CONTENT_VERSION"
             else
                 CONTENT_VERSION=$(echo $CIRCLE_TAG | grep -oP "\d.\d.\d+")
