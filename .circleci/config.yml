@@ -31,9 +31,23 @@ jobs:
           name: checkout repo
           command: |
             if [ "${CIRCLE_BRANCH}" == "" ]; then
-                git clone https://${GITHUB_TOKEN}@github.com/splunk/cloud-datamodel.git
+                git clone https://${GITHUB_TOKEN}@github.com/splunk/cloud-datamodel-security-research.git
             else
-                git clone --branch ${CIRCLE_BRANCH} https://${GITHUB_TOKEN}@github.com/splunk/cloud-datamodel.git
+                git clone --branch ${CIRCLE_BRANCH} https://${GITHUB_TOKEN}@github.com/splunk/cloud-datamodel-security-research.git
+            fi
+      - run:
+          name: update and report on release version as appropriate
+          command: |
+            cd cloud-datamodel-security-research
+            # if tag is set, get build number from the tag and update .conf file
+            if [ -z "${CIRCLE_TAG}" ]; then
+                CONTENT_VERSION=$(grep -oP "(\d.\d.\d+$)" package/default/content-version.conf)
+                echo "detected content version: $CONTENT_VERSION"
+            else
+                CONTENT_VERSION=$(echo $CIRCLE_TAG | grep -oP "\d.\d.\d+")
+                echo "content version: $CONTENT_VERSION, set by tag: $CIRCLE_TAG"
+                # update build number and version
+                sed -i "s/^version = .*$/version = $CONTENT_VERSION/g" default/app.conf
             fi
       - run:
           name: grab splunk packaging toolkit
@@ -61,7 +75,6 @@ jobs:
               rm -rf cloud-datamodel/.git
               rm -rf cloud-datamodel/.circleci
               rm -rf cloud-datamodel/.gitignore
-              CONTENT_VERSION=0.1
               mv cloud-datamodel SA-Cloud-Datamodel
               slim package -o upload SA-Cloud-Datamodel
               cp upload/*.tar.gz SA-Cloud-Datamodel-latest.tar.gz
