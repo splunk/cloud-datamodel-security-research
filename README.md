@@ -70,7 +70,7 @@ You can re-run the search, replacing both instances of "Compute" with "Storage" 
 
 You can also leverage the |tstats command to search this data as well:
 
-<code> | tstats values(Compute.dest) as machines  from datamodel=cloud_infrastructure.Compute by Compute.region Compute.vendor </code>
+<code> | tstats values(Compute.dest) as machines  from datamodel=Cloud_Infrastructure.Compute by Compute.region Compute.vendor </code>
 
 
 # Troubleshooting
