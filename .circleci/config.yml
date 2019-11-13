@@ -70,7 +70,7 @@ jobs:
           command: |
               source ~/slim-latest/venv/bin/activate
               mkdir ~/dist
-              cp -r cloud-datamodel ~/dist/
+              cp -r cloud-datamodel-security-research ~/dist/
               cd ~/dist
               rm -rf cloud-datamodel/.git
               rm -rf cloud-datamodel/.circleci
