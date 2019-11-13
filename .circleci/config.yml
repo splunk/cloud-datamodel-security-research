@@ -72,10 +72,10 @@ jobs:
               mkdir ~/dist
               cp -r cloud-datamodel-security-research ~/dist/
               cd ~/dist
-              rm -rf cloud-datamodel/.git
-              rm -rf cloud-datamodel/.circleci
-              rm -rf cloud-datamodel/.gitignore
-              mv cloud-datamodel SA-Cloud-Datamodel
+              rm -rf cloud-datamodel-security-research/.git
+              rm -rf cloud-datamodel-security-research/.circleci
+              rm -rf cloud-datamodel-security-research/.gitignore
+              mv cloud-datamodel-security-research SA-Cloud-Datamodel
               slim package -o upload SA-Cloud-Datamodel
               cp upload/*.tar.gz SA-Cloud-Datamodel-latest.tar.gz
       - store_artifacts:
