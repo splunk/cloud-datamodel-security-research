@@ -14,7 +14,7 @@ A Splunk data model for cloud infrastructure data (AWS / GCP / Azure)
 
 # Features
 * Provides a data model suitable for normalizing some of the data coming from AWS, GCP, and Azure. 
-	* Blocks for compute (VM Instances), storage, and network traffic
+	* Blocks for compute (VM Instances), storage, network traffic, and authentication/authorization
 * Includes additional eventtypes, field aliases, tags, and calculations to help populate the model.
 * Provides data-model mapping for:
 	* Basic VM activity (start, stop, create, terminate)
@@ -80,8 +80,12 @@ Make sure the indexes containing your cloud_infrastructure data are searchable b
 
 If data is not properly mapped, consider making edits to the lines provided in props.conf.
 
-# To Dos
-* Further testing/refinement of extractions and mappings
+# Notes / To-Dos
+* Because we-redefine some event types, you may get errors when starting splunk. To rectify, you can place the included props.conf, eventtypes.conf, and tags.conf into an app /local folder, which will give them precedence and resolve conflicts.
+* Could always use more Testing/refinement of extractions and mappings
+* Tags and eventtypes are used to populate the model. You can re-define these as desired
+* Most events have authentication assocaited with them. AWS is scoped down to AssumeRole and ConsoleLogin events only. For google and ms, .....
+
 
 
 # Provided DM fields
@@ -150,3 +154,19 @@ If data is not properly mapped, consider making edits to the lines provided in p
 |         	| vendor_product       	| The specific service/product generating the event                                                                                                                                                                                    	|
 |         	| vlan                 	| The virtual local area network (VLAN) specified in the record                                                                                                                                                                        	|
 |         	| vpc                  	| The virtual private cloud (VPC) specified in the record                                                                                                                                                                              	|
+| **Authentication** |                	|                                                                                                                                                                                                                                      	|
+|         	| action               	| Describes an action taken on a resource - for auth, this is typically success or failure                                                                                                                                             	|
+|         	| assumed_role_user   	| For events that assign temp credentials - the credential that is returned for use                                                                                                                                                   	|
+|         	| dest                 	| Destination/target of the authentication                                                                                                                                                                                       	|
+|         	| dest_ip              	| Destination IP address for the traffic                                                                                                                                                                                               	|
+|         	| event_name          	| Title for the event.                                                                                                                                                                                                          	|
+|		| group_name		| Specifies the group associated with the identity if provided 																						|
+|         	| http_user_agent      	| User agent presented with request                                                                                                                                                                                                    	|
+|		| mfa_auth		| Typically a boolen, indicating if mfa is used for authenticaiton																					|
+|         	| msg                  	| Error/code returned to caller                                                                                                                                                                                                        	|
+|         	| region               	| The region where the auth takes place                                                                                                                                                                                               	|
+|         	| src                  	| Source of traffic. Aliased from src_ip                                                                                                                                                                                               	|
+|         	| src_user             	| Identifier for the user making the request                                                                                                                                                                                           	|
+|         	| user_type            	| Type of user that made the request                                                                                                                                                                                                   	|
+|         	| vendor               	| The name of the cloud provider                                                                                                                                                                                                       	|
+|         	| vendor_product       	| The specific service/product generating the event                                                                                                                                                                                    	|

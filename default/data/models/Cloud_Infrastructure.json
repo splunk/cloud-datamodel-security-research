@@ -1111,6 +1111,255 @@
       "children": [
 
       ]
+    },
+    {
+      "comment": {
+        "tags": [
+          "cloud",
+          "authentication",
+          "infrastructure"
+        ]
+      },
+      "objectName": "Authentication",
+      "displayName": "Authentication",
+      "parentName": "BaseSearch",
+      "fields": [
+        {   
+          "comment": {
+            "description": "The temporary user issued for the assumed role",
+            "recommended": true
+          },
+          "fieldName": "assumed_role_user",
+          "displayName": "assumed_role_user",
+          "type": "string",
+          "fieldSearch": "",
+          "required": false,
+          "multivalue": false,
+          "hidden": false
+        },  
+        {   
+          "comment": {
+            "description": "The identifier for the event For AWS, this is the eventName",
+            "recommended": true
+          },
+          "fieldName": "event_name",
+          "displayName": "event_name",
+          "type": "string",
+          "fieldSearch": "",
+          "required": false,
+          "multivalue": false,
+          "hidden": false
+        },  
+        {   
+          "comment": {
+            "description": "The group name associated wtih the identity",
+            "recommended": true
+          },
+          "fieldName": "group_name",
+          "displayName": "group_name",
+          "type": "string",
+          "fieldSearch": "",
+          "required": false,
+          "multivalue": false,
+          "hidden": false
+        },  
+        {   
+          "comment": {
+            "description": "The value specified for mfa",
+            "recommended": true
+          },
+          "fieldName": "mfa_auth",
+          "displayName": "mfa_auth",
+          "type": "string",
+          "fieldSearch": "",
+          "required": false,
+          "multivalue": false,
+          "hidden": false
+        },  
+        {   
+          "comment": {
+            "description": "The return value for the request",
+            "recommended": true
+          },
+          "fieldName": "msg",
+          "displayName": "msg",
+          "type": "string",
+          "fieldSearch": "",
+          "required": false,
+          "multivalue": false,
+          "hidden": false
+        },  
+        {
+          "comment": {
+            "description": "This is the role associated with the event. For an AssuemRole event, it specifies the role requested",
+            "ta_relevant": true
+          },
+          "fieldName": "role",
+          "displayName": "role",
+          "type": "string",
+          "fieldSearch": "",
+          "required": false,
+          "multivalue": false,
+          "hidden": false
+        },
+        {
+          "comment": {
+            "description": "This is the region or geographical area in which the resource exists. For AWS, this is the awsRegion",
+            "ta_relevant": true
+          },
+          "fieldName": "region",
+          "displayName": "region",
+          "type": "string",
+          "fieldSearch": "",
+          "required": false,
+          "multivalue": false,
+          "hidden": false
+        },
+        {
+          "comment": {
+            "description": "The user-agent used in the request."
+          },
+          "fieldName": "http_user_agent",
+          "displayName": "http_user_agent",
+          "type": "string",
+          "fieldSearch": "",
+          "required": false,
+          "multivalue": false,
+          "hidden": false
+        },
+        {
+          "comment": {
+            "description": "The type of user making the call. For AWS, some example values are AssumedRole, IAMUser, and AWSService",
+            "recommended": true
+          },
+          "fieldName": "user_type",
+          "displayName": "user_type",
+          "type": "string",
+          "fieldSearch": "",
+          "required": false,
+          "multivalue": false,
+          "hidden": false
+        },
+        {   
+          "comment": {
+            "description": "This field is used to identify the cloud vendor responsible for the event.",
+            "ta_relevant": true
+          },
+          "fieldName": "vendor",
+          "displayName": "vendor",
+          "type": "string",
+          "fieldSearch": "",
+          "required": false,
+          "multivalue": false,
+          "hidden": false
+        },  
+        {
+          "comment": {
+            "description": "This field is used to identify the specific vendor product responsible for the event.",
+            "ta_relevant": true
+          },
+          "fieldName": "vendor_product",
+          "displayName": "vendor_product",
+          "type": "string",
+          "fieldSearch": "",
+          "required": false,
+          "multivalue": true,
+          "hidden": false
+        }
+      ],
+      "calculations": [
+        {
+          "calculationID": "Cloud_security_fillnull_action",
+          "calculationType": "Eval",
+          "outputFields": [
+            {
+              "comment": {
+                "description": "The action requested by the client for the compute resource.",
+                "expected_values": [
+                  "success",
+                  "failure",
+                  "unknown"
+                ],
+                "recommended": true
+              },
+              "fieldName": "action",
+              "displayName": "action",
+              "type": "string",
+              "fieldSearch": "",
+              "required": false,
+              "multivalue": false,
+              "hidden": false
+            }
+          ],
+          "expression": "if(isnull(action) OR action=\"\",\"unknown\",action)"
+        },
+        {
+          "calculationID": "Cloud_security_fillnull_dest",
+          "calculationType": "Eval",
+          "outputFields": [
+            {
+              "comment": {
+                "description": "The target involved in the authentication. You can alias this from more specific fields, such as dest_host, dest_ip, or dest_nt_host .",
+                "recommended": true
+              },
+              "fieldName": "dest",
+              "displayName": "dest",
+              "type": "string",
+              "fieldSearch": "",
+              "required": false,
+              "multivalue": false,
+              "hidden": false
+            }
+          ],
+          "expression": "if(isnull(dest) OR dest=\"\",\"unknown\",dest)"
+        },
+        {
+          "calculationID": "Cloud_security_fillnull_src",
+          "calculationType": "Eval",
+          "outputFields": [
+            {
+              "comment": {
+                "description": "The source IP address of the request.",
+                "recommended": true
+              },
+              "fieldName": "src",
+              "displayName": "src",
+              "type": "string",
+              "fieldSearch": "",
+              "required": false,
+              "multivalue": false,
+              "hidden": false
+            }
+          ],
+          "expression": "if(isnull(src) OR src=\"\",\"unknown\",src)"
+        },
+        {
+          "calculationID": "Cloud_security_fillnull_src_user",
+          "calculationType": "Eval",
+          "outputFields": [
+            {
+              "comment": {
+                "description": "In audit events, src_user represents the user who initiated the activity.",
+                "recommended": true
+              },
+              "fieldName": "src_user",
+              "displayName": "src_user",
+              "type": "string",
+              "fieldSearch": "",
+              "required": false,
+              "multivalue": false,
+              "hidden": false
+            }
+          ],
+          "expression": "if(isnull(src_user) OR src_user=\"\",\"unknown\",src_user)"
+        }
+      ],
+      "constraints": [
+      ],
+      "baseSearch": "tag=cloud tag=authentication tag=infrastructure",
+      "children": [
+
+      ]
     }
   ]
 }
