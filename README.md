@@ -62,11 +62,11 @@ Method 2:
 
 The following search will show you how the data model is being populated with compute data:
 
-<code>| datamodel Cloud_Infrastructure Compute search | table Compute*</code>
+<code>| datamodel cloud_infrastructure Compute search | table Compute*</code>
 
 You can re-run the search, replacing both instances of "Compute" with "Storage" or "Traffic." You can also look at a specific provider by inserting a search, such as:
 
-<code>| datamodel Cloud_Infrastructure Compute search | search sourcetype=aws:cloudtrail | table Compute*</code>
+<code>| datamodel cloud_infrastructure Compute search | search sourcetype=aws:cloudtrail | table Compute*</code>
 
 You can also leverage the |tstats command to search this data as well:
 
